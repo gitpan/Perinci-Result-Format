@@ -1,0 +1,52 @@
+{
+   "abstract" : "Format envelope result",
+   "author" : [
+      "Steven Haryanto <stevenharyanto@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Perinci-Result-Format",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Data::Format::Pretty" : 0,
+            "Data::Format::Pretty::Console" : "0.12",
+            "Data::Format::Pretty::JSON" : "0.03",
+            "Data::Format::Pretty::YAML" : "0.02",
+            "Rinci" : "v1.1.22",
+            "perl" : "5.010001"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.96"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "homepage" : "http://metacpan.org/release/Perinci-Result-Format",
+      "repository" : {
+         "url" : "http://github.com/sharyanto/perl-Perinci-Result-Format"
+      }
+   },
+   "version" : "0.28"
+}
+

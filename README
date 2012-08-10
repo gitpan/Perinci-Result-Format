@@ -1,0 +1,68 @@
+NAME
+    Perinci::Result::Format - Format envelope result
+
+VERSION
+    version 0.28
+
+SYNOPSIS
+DESCRIPTION
+    This module formats enveloped result to YAML, JSON, etc. It uses
+    Data::Format::Pretty for the backend. It is used by other Perinci
+    modules like Perinci::CmdLine and Perinci::Access::HTTP::Server.
+
+    The default supported formats are:
+
+    *   json
+
+        Using Data::Format::Pretty::YAML.
+
+    *   text-simple
+
+        Using Data::Format::Pretty::SimpleText.
+
+    *   text-pretty
+
+        Using Data::Format::Pretty::Text.
+
+    *   text
+
+        Using Data::Format::Pretty::Console.
+
+    *   yaml
+
+        Using Data::Format::Pretty::YAML.
+
+VARIABLES
+%Perinci::Result::Format::Formats
+    Contains a mapping between format names and Data::Format::Pretty::*
+    module names + MIME type.
+
+FUNCTIONS
+    None is currently exported/exportable.
+
+format($res, $format) => STR
+FAQ
+  How to add support for new formats?
+    First make sure that Data::Format::Pretty::<FORMAT> module is available
+    for your format. Look on CPAN. If it's not, i't also not hard to create
+    one.
+
+    Then, add your format to %Perinci::Result::Format::Formats hash:
+
+     use Perinci::Result::Format;
+
+     # this means format named 'xml' will be handled by Data::Format::Pretty::XML
+     $Perinci::Result::Format::Formats{xml} = ['XML', 'text/xml'];
+
+SEE ALSO
+    Data::Format::Pretty
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2012 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+

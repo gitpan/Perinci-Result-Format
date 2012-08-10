@@ -1,0 +1,27 @@
+---
+abstract: 'Format envelope result'
+author:
+  - 'Steven Haryanto <stevenharyanto@gmail.com>'
+build_requires:
+  Module::Build: 0.3601
+  Test::More: 0.96
+configure_requires:
+  Module::Build: 0.3601
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Perinci-Result-Format
+requires:
+  Data::Format::Pretty: 0
+  Data::Format::Pretty::Console: 0.12
+  Data::Format::Pretty::JSON: 0.03
+  Data::Format::Pretty::YAML: 0.02
+  Rinci: v1.1.22
+  perl: 5.010001
+resources:
+  homepage: http://metacpan.org/release/Perinci-Result-Format
+  repository: http://github.com/sharyanto/perl-Perinci-Result-Format
+version: 0.28
