@@ -1,5 +1,14 @@
 Revision history for Perinci-Result-Format
 
+0.30     2013-03-01 (SHARYANTO)
+
+         [ENHANCEMENTS]
+
+         - Add package variable flag $Enable_Decoration to allow disabling
+           colored YAML/JSON output (used by Perinci-Access-HTTP-Server, for
+           example).
+
+
 0.29     2012-12-25 (SHARYANTO)
 
          Merry Christmas!

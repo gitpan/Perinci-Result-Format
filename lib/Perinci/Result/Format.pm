@@ -6,7 +6,12 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.29'; # VERSION
+our $VERSION = '0.30'; # VERSION
+
+# decorations include color or other markup, which might make a data structure
+# like JSON or YAML string become invalid JSON/YAML. this should be turned off
+# if one wants to send the formatting over network.
+our $Enable_Decoration = 1;
 
 # text formats are special. since they are more oriented towards human instead
 # of machine, we remove envelope when status is 200, so users only see content.
@@ -56,11 +61,15 @@ sub format {
 
     my $formatter = $Formats{$format} or return undef;
 
+    my $deco = $Enable_Decoration;
+
     if ((reftype($formatter->[0]) // '') eq 'CODE') {
         return $formatter->[0]->($format, $res);
     } else {
+        my %o;
+        $o{color} = 0 if !$deco && $format =~ /json|yaml/;
         return Data::Format::Pretty::format_pretty(
-            $res, {module=>$formatter->[0]});
+            $res, {%o, module=>$formatter->[0]});
     }
 }
 
@@ -77,7 +86,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-version 0.29
+version 0.30
 
 =head1 SYNOPSIS
 
@@ -152,7 +161,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Steven Haryanto.
+This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
