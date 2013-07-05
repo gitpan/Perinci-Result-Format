@@ -2,7 +2,7 @@ NAME
     Perinci::Result::Format - Format envelope result
 
 VERSION
-    version 0.30
+    version 0.31
 
 SYNOPSIS
 DESCRIPTION
@@ -33,14 +33,43 @@ DESCRIPTION
         Using Data::Format::Pretty::YAML.
 
 VARIABLES
-%Perinci::Result::Format::Formats
+%Perinci::Result::Format::Formats => HASH
     Contains a mapping between format names and Data::Format::Pretty::*
     module names + MIME type.
+
+$Enable_Decoration => BOOL (default: 1)
+    Decorations include color or other markup, which might make a data
+    structure like JSON or YAML string become invalid JSON/YAML. This should
+    be turned off if one wants to send the formatting over network.
+
+$Enable_Cleansing => BOOL (default: 0)
+    If enabled, cleansing will be done to data to help make sure that data
+    does not contain item that cannot be handled by formatter. for example,
+    JSON format cannot handle circular references or complex types other
+    than hash/array.
 
 FUNCTIONS
     None is currently exported/exportable.
 
 format($res, $format) => STR
+    Format enveloped result $res with format named $format.
+
+    Result metadata ("$res->[3]") is also checked for key named
+    "result_format_options". The value should be a hash like this "{
+    FORMAT_NAME => OPTS, ... }". This way, function results can specify the
+    details of formatting. An example enveloped result:
+
+     [200, "OK", ["foo", "bar", "baz"], {
+         result_format_options => {
+             "text"        => {list_max_columns=>1},
+             "text-pretty" => {list_max_columns=>1},
+         }
+     }]
+
+    The above result specifies that if it is displayed using "text" or
+    "text-pretty" format, it should be displayed in one columns instead of
+    multicolumns.
+
 FAQ
   How to add support for new formats?
     First make sure that Data::Format::Pretty::<FORMAT> module is available

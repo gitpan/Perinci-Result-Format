@@ -1,17 +1,15 @@
 package Perinci::Result::Format;
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.30'; # VERSION
+our $VERSION = '0.31'; # VERSION
 
-# decorations include color or other markup, which might make a data structure
-# like JSON or YAML string become invalid JSON/YAML. this should be turned off
-# if one wants to send the formatting over network.
 our $Enable_Decoration = 1;
+our $Enable_Cleansing  = 0;
 
 # text formats are special. since they are more oriented towards human instead
 # of machine, we remove envelope when status is 200, so users only see content.
@@ -26,7 +24,9 @@ my $format_text = sub {
     my ($r, $opts);
     if ($res->[0] == 200) {
         $r = $res->[2];
-        $opts = $res->[3]{result_format_options} // {};
+        my $rfo = $res->[3]{result_format_options} // {};
+        # old compat, rfo used to be only opts, now it's {fmt=>opts, ...}
+        if ($rfo->{$format}) { $opts = $rfo->{$format} } else { $opts = $rfo }
     } else {
         $r = $res;
         $opts = {};
@@ -46,12 +46,12 @@ my $format_text = sub {
 };
 
 our %Formats = (
-    yaml          => ['YAML', 'text/yaml'],
-    json          => ['CompactJSON', 'application/json'],
-    'json-pretty' => ['JSON', 'application/json'],
-    text          => [$format_text, 'text/plain'],
-    'text-simple' => [$format_text, 'text/plain'],
-    'text-pretty' => [$format_text, 'text/plain'],
+    yaml          => ['YAML', 'text/yaml', {circular=>1}],
+    json          => ['CompactJSON', 'application/json', {circular=>0}],
+    'json-pretty' => ['JSON', 'application/json', {circular=>0}],
+    text          => [$format_text, 'text/plain', {circular=>0}],
+    'text-simple' => [$format_text, 'text/plain', {circular=>0}],
+    'text-pretty' => [$format_text, 'text/plain', {circular=>0}],
 );
 
 sub format {
@@ -59,17 +59,28 @@ sub format {
 
     my ($res, $format) = @_;
 
-    my $formatter = $Formats{$format} or return undef;
+    my $fmtinfo = $Formats{$format} or return undef;
+    my $formatter = $fmtinfo->[0];
+
+    state $cleanser;
+    if ($Enable_Cleansing && !$fmtinfo->[2]{circular}) {
+        # currently we only have one type of cleansing, oriented towards JSON
+        if (!$cleanser) {
+            require Data::Clean::JSON;
+            $cleanser = Data::Clean::JSON->new;
+        }
+        $cleanser->clean_in_place($res);
+    }
 
     my $deco = $Enable_Decoration;
 
-    if ((reftype($formatter->[0]) // '') eq 'CODE') {
-        return $formatter->[0]->($format, $res);
+    if ((reftype($formatter) // '') eq 'CODE') {
+        return $formatter->($format, $res);
     } else {
         my %o;
         $o{color} = 0 if !$deco && $format =~ /json|yaml/;
         return Data::Format::Pretty::format_pretty(
-            $res, {%o, module=>$formatter->[0]});
+            $res, {%o, module=>$formatter});
     }
 }
 
@@ -86,7 +97,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-version 0.30
+version 0.31
 
 =head1 SYNOPSIS
 
@@ -126,16 +137,46 @@ Using Data::Format::Pretty::YAML.
 
 =head1 VARIABLES
 
-=head1 %Perinci::Result::Format::Formats
+=head1 %Perinci::Result::Format::Formats => HASH
 
 Contains a mapping between format names and Data::Format::Pretty::* module
 names + MIME type.
+
+=head1 $Enable_Decoration => BOOL (default: 1)
+
+Decorations include color or other markup, which might make a data structure
+like JSON or YAML string become invalid JSON/YAML. This should be turned off if
+one wants to send the formatting over network.
+
+=head1 $Enable_Cleansing => BOOL (default: 0)
+
+If enabled, cleansing will be done to data to help make sure that data does not
+contain item that cannot be handled by formatter. for example, JSON format
+cannot handle circular references or complex types other than hash/array.
 
 =head1 FUNCTIONS
 
 None is currently exported/exportable.
 
 =head1 format($res, $format) => STR
+
+Format enveloped result C<$res> with format named C<$format>.
+
+Result metadata (C<< $res->[3] >>) is also checked for key named
+C<result_format_options>. The value should be a hash like this C<< { FORMAT_NAME
+=> OPTS, ... } >>. This way, function results can specify the details of
+formatting. An example enveloped result:
+
+ [200, "OK", ["foo", "bar", "baz"], {
+     result_format_options => {
+         "text"        => {list_max_columns=>1},
+         "text-pretty" => {list_max_columns=>1},
+     }
+ }]
+
+The above result specifies that if it is displayed using C<text> or
+C<text-pretty> format, it should be displayed in one columns instead of
+multicolumns.
 
 =head1 FAQ
 

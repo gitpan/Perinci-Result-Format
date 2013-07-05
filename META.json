@@ -34,6 +34,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Data::Clean::JSON" : "0",
             "Data::Format::Pretty" : "0",
             "Data::Format::Pretty::Console" : "0.12",
             "Data::Format::Pretty::JSON" : "0.03",
@@ -55,6 +56,6 @@
          "url" : "http://github.com/sharyanto/perl-Perinci-Result-Format"
       }
    },
-   "version" : "0.30"
+   "version" : "0.31"
 }
 

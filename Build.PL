@@ -18,12 +18,13 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Perinci-Result-Format",
-  "dist_version" => "0.30",
+  "dist_version" => "0.31",
   "license" => "perl",
   "module_name" => "Perinci::Result::Format",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "Data::Clean::JSON" => 0,
     "Data::Format::Pretty" => 0,
     "Data::Format::Pretty::Console" => "0.12",
     "Data::Format::Pretty::JSON" => "0.03",

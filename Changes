@@ -1,5 +1,15 @@
 Revision history for Perinci-Result-Format
 
+0.31     2013-07-05 (SHARYANTO) (not yet released)
+
+         [ENHANCEMENTS]
+
+         - Add package variable flag $Enable_Cleansing to allow in-place
+           cleansing of data that contain items that cannot be handled by
+           formatter. For example, JSON cannot handle circular data or complex
+           types other than array/hash.
+
+
 0.30     2013-03-01 (SHARYANTO)
 
          [ENHANCEMENTS]
