@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.31'; # VERSION
+our $VERSION = '0.32'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -16,10 +16,67 @@ our $Enable_Cleansing  = 0;
 
 my $format_text = sub {
     my ($format, $res) = @_;
+
+    my $stack_trace_printed;
+
+    my $print_err = sub {
+        my $res = shift;
+        my $out = "ERROR $res->[0]" . ($res->[1] ? ": $res->[1]" : "");
+        $out =~ s/\n+\z//;
+        my $clog; $clog = $res->[3]{logs}[0]
+            if $res->[3] && $res->[3]{logs};
+        if ($clog->{file} && $clog->{line}) {
+            $out .= " (at $clog->{file} line $clog->{line})";
+        }
+        $out .= "\n";
+        if ($clog->{stack_trace} && $INC{"Carp/Always.pm"} &&
+                !$stack_trace_printed) {
+            require Data::Dump::OneLine;
+            my $i;
+            for my $c (@{ $clog->{stack_trace} }) {
+                next unless $i++; # skip first entry
+                my $args;
+                if (!$c->[4]) {
+                    $args = "()";
+                } elsif (!ref($c->[4])) {
+                    $args = "(...)";
+                } else {
+                    # periutil 0.37+ stores call arguments in [4]
+
+                    # XXX a flag to let user choose which
+
+                    # dump version
+                    #$args = Data::Dump::OneLine::dump1(@{ $c->[4] });
+                    #$args = "($args)" if @{$c->[4]} < 2;
+
+                    # stringify version
+                    $args = Data::Dump::OneLine::dump1(
+                        map {defined($_) ? "$_":$_} @{ $c->[4] });
+                    $args = "($args)" if @{$c->[4]} == 1;
+                }
+                $out .= "    $c->[3]${args} called at $c->[1] line $c->[2]\n";
+            }
+            $stack_trace_printed++;
+        }
+        $out;
+    };
+
     if (!defined($res->[2])) {
-        return $res->[0] =~ /\A(?:200|304)\z/ ? "" :
-            "ERROR $res->[0]: $res->[1]" .
-                ($res->[1] =~ /\n\z/ ? "" : "\n");
+        my $out = $res->[0] =~ /\A(?:200|304)\z/ ? "" : $print_err->($res);
+        my $max = 30;
+        my $i = 0;
+        my $prev = $res;
+        while (1) {
+            if ($i > $max) {
+                $out .= "  Previous error list too deep, stopping here\n";
+                last;
+            }
+            last unless $prev = $prev->[3]{prev};
+            last unless ref($prev) eq 'ARRAY';
+            $out .= "  " . $print_err->($prev);
+            $i++;
+        }
+        return $out;
     }
     my ($r, $opts);
     if ($res->[0] == 200) {
@@ -87,8 +144,8 @@ sub format {
 1;
 # ABSTRACT: Format envelope result
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -97,7 +154,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-version 0.31
+version 0.32
 
 =head1 SYNOPSIS
 
@@ -208,4 +265,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

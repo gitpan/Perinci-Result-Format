@@ -4,7 +4,7 @@
       "Steven Haryanto <stevenharyanto@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140",
    "license" : [
       "perl_5"
    ],
@@ -14,14 +14,9 @@
    },
    "name" : "Perinci-Result-Format",
    "prereqs" : {
-      "build" : {
-         "requires" : {
-            "Module::Build" : "0.3601"
-         }
-      },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.3601"
+            "ExtUtils::MakeMaker" : "6.30"
          }
       },
       "develop" : {
@@ -35,17 +30,20 @@
       "runtime" : {
          "requires" : {
             "Data::Clean::JSON" : "0",
+            "Data::Dump::OneLine" : "0",
             "Data::Format::Pretty" : "0",
             "Data::Format::Pretty::Console" : "0.12",
             "Data::Format::Pretty::JSON" : "0.03",
             "Data::Format::Pretty::YAML" : "0.02",
-            "Rinci" : "v1.1.22",
+            "Rinci" : "v1.1.38",
             "perl" : "5.010001"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.96"
+            "Capture::Tiny" : "0",
+            "Test::More" : "0.96",
+            "blib" : "0"
          }
       }
    },
@@ -56,6 +54,6 @@
          "url" : "http://github.com/sharyanto/perl-Perinci-Result-Format"
       }
    },
-   "version" : "0.31"
+   "version" : "0.32"
 }
 

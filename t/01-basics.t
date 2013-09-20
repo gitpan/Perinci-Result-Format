@@ -22,9 +22,12 @@ is(Perinci::Result::Format::format([400, "Foo"], 'text-simple'),
    "ERROR 400: Foo\n",
    "text: error message formatting");
 
-is(Perinci::Result::Format::format([200, "OK", ""], 'json'),
-   '[200,"OK",""]',
-   "json");
+{
+    $ENV{COLOR} = 0;
+    is(Perinci::Result::Format::format([200, "OK", ""], 'json'),
+       '[200,"OK",""]',
+       "json");
+}
 
 is($Perinci::Result::Format::Formats{json}[1],
    'application/json',
@@ -33,4 +36,3 @@ is($Perinci::Result::Format::Formats{json}[1],
 # XXX test result metadata: result_format_options
 
 done_testing();
-
