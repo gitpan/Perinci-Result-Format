@@ -20,20 +20,22 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Perinci::Result::Format",
   "PREREQ_PM" => {
+    "Color::ANSI::Util" => 0,
     "Data::Clean::JSON" => 0,
     "Data::Dump::OneLine" => 0,
     "Data::Format::Pretty" => 0,
     "Data::Format::Pretty::Console" => "0.12",
     "Data::Format::Pretty::JSON" => "0.03",
     "Data::Format::Pretty::YAML" => "0.02",
-    "Rinci" => "v1.1.38"
+    "Rinci" => "v1.1.38",
+    "Term::Detect::Software" => 0
   },
   "TEST_REQUIRES" => {
-    "Capture::Tiny" => 0,
-    "Test::More" => "0.96",
-    "blib" => 0
+    "IO::Handle" => 0,
+    "IPC::Open3" => 0,
+    "Test::More" => "0.96"
   },
-  "VERSION" => "0.32",
+  "VERSION" => "0.33",
   "test" => {
     "TESTS" => "t/*.t"
   }

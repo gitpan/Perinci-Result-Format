@@ -1,5 +1,10 @@
 Revision history for Perinci-Result-Format
 
+0.33     2013-10-03 (SHARYANTO)
+
+         - text: Colorize error response.
+
+
 0.32     2013-09-16 (SHARYANTO)
 
          - text: Show previous errors and stack trace.

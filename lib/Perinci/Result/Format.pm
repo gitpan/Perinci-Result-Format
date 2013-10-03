@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.32'; # VERSION
+our $VERSION = '0.33'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -14,19 +14,46 @@ our $Enable_Cleansing  = 0;
 # text formats are special. since they are more oriented towards human instead
 # of machine, we remove envelope when status is 200, so users only see content.
 
+# XXX color theme?
+
 my $format_text = sub {
     my ($format, $res) = @_;
 
     my $stack_trace_printed;
 
     my $print_err = sub {
+        require Color::ANSI::Util;
+        require Term::Detect::Software;
+
+        my $use_color = $ENV{COLOR} // 1;
+        my $terminfo = Term::Detect::Software::detect_terminal_cached();
+        $use_color = 0 if !$terminfo->{color_depth};
+        my $colorize = sub {
+            my ($color, $str) = @_;
+            if ($use_color) {
+                if (ref($color) eq 'ARRAY') {
+                    (defined($color->[0]) ?
+                         Color::ANSI::Util::ansifg($color->[0]):"").
+                               (defined($color->[1]) ?
+                                    Color::ANSI::Util::ansibg($color->[1]):"").
+                                          $str . "\e[0m";
+                } else {
+                    Color::ANSI::Util::ansifg($color) . $str . "\e[0m";
+                }
+            } else {
+                $str;
+            }
+        };
+
         my $res = shift;
-        my $out = "ERROR $res->[0]" . ($res->[1] ? ": $res->[1]" : "");
+        my $out = $colorize->("cc0000", "ERROR $res->[0]") .
+            ($res->[1] ? ": $res->[1]" : "");
         $out =~ s/\n+\z//;
         my $clog; $clog = $res->[3]{logs}[0]
             if $res->[3] && $res->[3]{logs};
         if ($clog->{file} && $clog->{line}) {
-            $out .= " (at $clog->{file} line $clog->{line})";
+            $out .= " (at ".$colorize->('3399cc', $clog->{file}).
+                " line ".$colorize->('3399cc', $clog->{line}).")";
         }
         $out .= "\n";
         if ($clog->{stack_trace} && $INC{"Carp/Always.pm"} &&
@@ -154,7 +181,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-version 0.32
+version 0.33
 
 =head1 SYNOPSIS
 

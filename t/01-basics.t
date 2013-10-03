@@ -18,9 +18,12 @@ is(Perinci::Result::Format::format([200, "OK", "a"], 'text-simple'),
 is(Perinci::Result::Format::format([200, "OK", "a\n"], 'text-simple'),
    "a\n",
    "text: envelope removed when 200 (3)");
-is(Perinci::Result::Format::format([400, "Foo"], 'text-simple'),
-   "ERROR 400: Foo\n",
-   "text: error message formatting");
+{
+    local $ENV{COLOR} = 0;
+    is(Perinci::Result::Format::format([400, "Foo"], 'text-simple'),
+       "ERROR 400: Foo\n",
+       "text: error message formatting");
+}
 
 {
     $ENV{COLOR} = 0;
