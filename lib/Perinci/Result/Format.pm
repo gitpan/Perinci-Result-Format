@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.33'; # VERSION
+our $VERSION = '0.34'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -130,12 +130,16 @@ my $format_text = sub {
 };
 
 our %Formats = (
-    yaml          => ['YAML', 'text/yaml', {circular=>1}],
+    # YAML::Tiny::Color currently does not support circular refs
+    yaml          => ['YAML', 'text/yaml', {circular=>0}],
     json          => ['CompactJSON', 'application/json', {circular=>0}],
     'json-pretty' => ['JSON', 'application/json', {circular=>0}],
     text          => [$format_text, 'text/plain', {circular=>0}],
     'text-simple' => [$format_text, 'text/plain', {circular=>0}],
     'text-pretty' => [$format_text, 'text/plain', {circular=>0}],
+    'perl'        => ['Perl', 'text/x-perl', {circular=>1}],
+    #'php'         => ['PHP', 'application/x-httpd-php', {circular=>0}],
+    'ruby'        => ['Ruby', 'application/x-ruby', {circular=>1}],
 );
 
 sub format {
@@ -181,7 +185,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-version 0.33
+version 0.34
 
 =head1 SYNOPSIS
 

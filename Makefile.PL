@@ -26,16 +26,19 @@ my %WriteMakefileArgs = (
     "Data::Format::Pretty" => 0,
     "Data::Format::Pretty::Console" => "0.12",
     "Data::Format::Pretty::JSON" => "0.03",
+    "Data::Format::Pretty::Perl" => 0,
+    "Data::Format::Pretty::Ruby" => 0,
     "Data::Format::Pretty::YAML" => "0.02",
     "Rinci" => "v1.1.38",
     "Term::Detect::Software" => 0
   },
   "TEST_REQUIRES" => {
+    "File::Spec" => 0,
     "IO::Handle" => 0,
     "IPC::Open3" => 0,
     "Test::More" => "0.96"
   },
-  "VERSION" => "0.33",
+  "VERSION" => "0.34",
   "test" => {
     "TESTS" => "t/*.t"
   }
