@@ -1,8 +1,13 @@
 Revision history for Perinci-Result-Format
 
+0.35     2013-10-24 (SHARYANTO)
+
+         - Add format: phpserialization.
+
+
 0.34     2013-10-05 (SHARYANTO)
 
-         - Add Perl & Ruby formats.
+         - Add formats: perl & ruby.
 
 
 0.33     2013-10-03 (SHARYANTO)
@@ -34,9 +39,7 @@ Revision history for Perinci-Result-Format
            example).
 
 
-0.29     2012-12-25 (SHARYANTO)
-
-         - Merry Christmas!
+0.29     2012-12-25 (SHARYANTO) - Merry Christmas!
 
          - Observe result metadata: result_format_options.
 

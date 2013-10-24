@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.34'; # VERSION
+our $VERSION = '0.35'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -139,6 +139,7 @@ our %Formats = (
     'text-pretty' => [$format_text, 'text/plain', {circular=>0}],
     'perl'        => ['Perl', 'text/x-perl', {circular=>1}],
     #'php'         => ['PHP', 'application/x-httpd-php', {circular=>0}],
+    'phpserialization' => ['PHPSerialization', 'application/vnd.php.serialized', {circular=>0}],
     'ruby'        => ['Ruby', 'application/x-ruby', {circular=>1}],
 );
 
@@ -155,7 +156,7 @@ sub format {
         # currently we only have one type of cleansing, oriented towards JSON
         if (!$cleanser) {
             require Data::Clean::JSON;
-            $cleanser = Data::Clean::JSON->new;
+            $cleanser = Data::Clean::JSON->get_cleanser;
         }
         $cleanser->clean_in_place($res);
     }
@@ -179,13 +180,11 @@ __END__
 
 =pod
 
+=encoding utf-8
+
 =head1 NAME
 
 Perinci::Result::Format - Format envelope result
-
-=head1 VERSION
-
-version 0.34
 
 =head1 SYNOPSIS
 
@@ -246,6 +245,9 @@ cannot handle circular references or complex types other than hash/array.
 
 None is currently exported/exportable.
 
+
+None are exported by default, but they are exportable.
+
 =head1 format($res, $format) => STR
 
 Format enveloped result C<$res> with format named C<$format>.
@@ -268,6 +270,12 @@ multicolumns.
 
 =head1 FAQ
 
+=head2 How to list supported formats?
+
+Simply:
+
+ my @supported_formats = keys %Perinci::Result::Format::Formats;
+
 =head2 How to add support for new formats?
 
 First make sure that Data::Format::Pretty::<FORMAT> module is available for your
@@ -283,6 +291,23 @@ Then, add your format to %Perinci::Result::Format::Formats hash:
 =head1 SEE ALSO
 
 L<Data::Format::Pretty>
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Perinci-Result-Format>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Perinci-Result-Format>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+http://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Result-Format
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
 
 =head1 AUTHOR
 

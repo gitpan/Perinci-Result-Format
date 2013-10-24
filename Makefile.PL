@@ -21,11 +21,12 @@ my %WriteMakefileArgs = (
   "NAME" => "Perinci::Result::Format",
   "PREREQ_PM" => {
     "Color::ANSI::Util" => 0,
-    "Data::Clean::JSON" => 0,
+    "Data::Clean::JSON" => "0.11",
     "Data::Dump::OneLine" => 0,
     "Data::Format::Pretty" => 0,
     "Data::Format::Pretty::Console" => "0.12",
     "Data::Format::Pretty::JSON" => "0.03",
+    "Data::Format::Pretty::PHPSerialization" => 0,
     "Data::Format::Pretty::Perl" => 0,
     "Data::Format::Pretty::Ruby" => 0,
     "Data::Format::Pretty::YAML" => "0.02",
@@ -38,7 +39,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => "0.96"
   },
-  "VERSION" => "0.34",
+  "VERSION" => "0.35",
   "test" => {
     "TESTS" => "t/*.t"
   }
