@@ -1,5 +1,11 @@
 Revision history for Perinci-Result-Format
 
+0.36     2014-02-14 (SHARYANTO)
+
+         - Update for the perl formatter (it adds color by default now, so we
+           need to be able to handle/disable it).
+
+
 0.35     2013-10-24 (SHARYANTO)
 
          - Add format: phpserialization.

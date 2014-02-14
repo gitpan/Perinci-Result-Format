@@ -1,6 +1,9 @@
 NAME
     Perinci::Result::Format - Format envelope result
 
+VERSION
+    version 0.36
+
 SYNOPSIS
 DESCRIPTION
     This module formats enveloped result to YAML, JSON, etc. It uses
@@ -47,8 +50,6 @@ $Enable_Cleansing => BOOL (default: 0)
 
 FUNCTIONS
     None is currently exported/exportable.
-
-    None are exported by default, but they are exportable.
 
 format($res, $format) => STR
     Format enveloped result $res with format named $format.
@@ -100,7 +101,8 @@ SOURCE
 
 BUGS
     Please report any bugs or feature requests on the bugtracker website
-    http://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Result-Format
+    <https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Result-Format
+    >
 
     When submitting a bug or request, please include a test-file or a patch
     to an existing test-file that illustrates the bug or desired feature.
@@ -109,7 +111,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
+    This software is copyright (c) 2014 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

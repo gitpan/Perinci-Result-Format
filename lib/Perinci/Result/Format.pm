@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.35'; # VERSION
+our $VERSION = '0.36'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -167,7 +167,7 @@ sub format {
         return $formatter->($format, $res);
     } else {
         my %o;
-        $o{color} = 0 if !$deco && $format =~ /json|yaml/;
+        $o{color} = 0 if !$deco && $format =~ /json|yaml|perl/;
         return Data::Format::Pretty::format_pretty(
             $res, {%o, module=>$formatter});
     }
@@ -180,11 +180,15 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
 Perinci::Result::Format - Format envelope result
+
+=head1 VERSION
+
+version 0.36
 
 =head1 SYNOPSIS
 
@@ -245,9 +249,6 @@ cannot handle circular references or complex types other than hash/array.
 
 None is currently exported/exportable.
 
-
-None are exported by default, but they are exportable.
-
 =head1 format($res, $format) => STR
 
 Format enveloped result C<$res> with format named C<$format>.
@@ -302,8 +303,7 @@ Source repository is at L<https://github.com/sharyanto/perl-Perinci-Result-Forma
 
 =head1 BUGS
 
-Please report any bugs or feature requests on the bugtracker website
-http://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Result-Format
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Result-Format>
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
@@ -315,7 +315,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
