@@ -2,7 +2,7 @@ NAME
     Perinci::Result::Format - Format envelope result
 
 VERSION
-    This document describes version 0.37 of Perinci::Result::Format (from
+    This document describes version 0.38 of Perinci::Result::Format (from
     Perl distribution Perinci-Result-Format), released on 2014-06-18.
 
 SYNOPSIS

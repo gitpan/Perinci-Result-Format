@@ -34,7 +34,7 @@ resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Perinci-Result-Format
   homepage: https://metacpan.org/release/Perinci-Result-Format
   repository: git://github.com/sharyanto/perl-Perinci-Result-Format.git
-version: '0.37'
+version: '0.38'
 x_Dist_Zilla:
   perl:
     version: '5.018001'

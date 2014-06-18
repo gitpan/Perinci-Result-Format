@@ -1,5 +1,12 @@
 Revision history for Perinci-Result-Format
 
+0.38     2014-06-18 (SHARYANTO)
+
+         [BUG FIXES]
+
+         - Second attempt, coding mistake.
+
+
 0.37     2014-06-18 (SHARYANTO)
 
          - If $Enable_Cleansing is true, do clone-and-clean instead of

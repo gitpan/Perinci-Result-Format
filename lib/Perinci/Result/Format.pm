@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.37'; # VERSION
+our $VERSION = '0.38'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -158,7 +158,7 @@ sub format {
             require Data::Clean::JSON;
             $cleanser = Data::Clean::JSON->get_cleanser;
         }
-        $cleanser->clone_and_clean($res);
+        $res = $cleanser->clone_and_clean($res);
     }
 
     my $deco = $Enable_Decoration;
@@ -188,7 +188,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-This document describes version 0.37 of Perinci::Result::Format (from Perl distribution Perinci-Result-Format), released on 2014-06-18.
+This document describes version 0.38 of Perinci::Result::Format (from Perl distribution Perinci-Result-Format), released on 2014-06-18.
 
 =head1 SYNOPSIS
 
