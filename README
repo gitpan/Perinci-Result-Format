@@ -2,7 +2,8 @@ NAME
     Perinci::Result::Format - Format envelope result
 
 VERSION
-    version 0.36
+    This document describes version 0.37 of Perinci::Result::Format (from
+    Perl distribution Perinci-Result-Format), released on 2014-06-18.
 
 SYNOPSIS
 DESCRIPTION
@@ -14,7 +15,11 @@ DESCRIPTION
 
     *   json
 
-        Using Data::Format::Pretty::YAML.
+        Using Data::Format::Pretty::CompactJSON.
+
+    *   json-pretty
+
+        Using Data::Format::Pretty::JSON.
 
     *   text-simple
 
@@ -31,6 +36,18 @@ DESCRIPTION
     *   yaml
 
         Using Data::Format::Pretty::YAML.
+
+    *   perl
+
+        Using Data::Format::Pretty::Perl.
+
+    *   phpserialization
+
+        Using Data::Format::Pretty::PHPSerialization.
+
+    *   ruby
+
+        Using Data::Format::Pretty::Ruby.
 
 VARIABLES
 %Perinci::Result::Format::Formats => HASH
@@ -69,6 +86,9 @@ format($res, $format) => STR
     The above result specifies that if it is displayed using "text" or
     "text-pretty" format, it should be displayed in one columns instead of
     multicolumns.
+
+RESULT METADATA
+    *   property: result_format_options => HASH
 
 FAQ
   How to list supported formats?

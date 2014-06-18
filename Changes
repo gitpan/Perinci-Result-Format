@@ -1,5 +1,12 @@
 Revision history for Perinci-Result-Format
 
+0.37     2014-06-18 (SHARYANTO)
+
+         - If $Enable_Cleansing is true, do clone-and-clean instead of
+           clean-in-place, to avoid modifying e.g. Rinci metadata cache in a
+           long-running server.
+
+
 0.36     2014-02-14 (SHARYANTO)
 
          - Update for the perl formatter (it adds color by default now, so we

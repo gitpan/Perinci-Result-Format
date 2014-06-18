@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util qw(reftype);
 
-our $VERSION = '0.36'; # VERSION
+our $VERSION = '0.37'; # VERSION
 
 our $Enable_Decoration = 1;
 our $Enable_Cleansing  = 0;
@@ -158,7 +158,7 @@ sub format {
             require Data::Clean::JSON;
             $cleanser = Data::Clean::JSON->get_cleanser;
         }
-        $cleanser->clean_in_place($res);
+        $cleanser->clone_and_clean($res);
     }
 
     my $deco = $Enable_Decoration;
@@ -188,7 +188,7 @@ Perinci::Result::Format - Format envelope result
 
 =head1 VERSION
 
-version 0.36
+This document describes version 0.37 of Perinci::Result::Format (from Perl distribution Perinci-Result-Format), released on 2014-06-18.
 
 =head1 SYNOPSIS
 
@@ -204,7 +204,11 @@ The default supported formats are:
 
 =item * json
 
-Using Data::Format::Pretty::YAML.
+Using Data::Format::Pretty::CompactJSON.
+
+=item * json-pretty
+
+Using Data::Format::Pretty::JSON.
 
 =item * text-simple
 
@@ -221,6 +225,18 @@ Using Data::Format::Pretty::Console.
 =item * yaml
 
 Using Data::Format::Pretty::YAML.
+
+=item * perl
+
+Using Data::Format::Pretty::Perl.
+
+=item * phpserialization
+
+Using Data::Format::Pretty::PHPSerialization.
+
+=item * ruby
+
+Using Data::Format::Pretty::Ruby.
 
 =back
 
@@ -268,6 +284,14 @@ formatting. An example enveloped result:
 The above result specifies that if it is displayed using C<text> or
 C<text-pretty> format, it should be displayed in one columns instead of
 multicolumns.
+
+=head1 RESULT METADATA
+
+=over
+
+=item * property: result_format_options => HASH
+
+=back
 
 =head1 FAQ
 
